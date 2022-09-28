@@ -1,26 +1,21 @@
-package plugindemo_test
+package cas_test
 
 import (
 	"context"
+	"github.com/lsz66/traefik-cas-plugin"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/traefik/plugindemo"
 )
 
 func TestDemo(t *testing.T) {
-	cfg := plugindemo.CreateConfig()
-	cfg.Headers["X-Host"] = "[[.Host]]"
-	cfg.Headers["X-Method"] = "[[.Method]]"
-	cfg.Headers["X-URL"] = "[[.URL]]"
-	cfg.Headers["X-URL"] = "[[.URL]]"
-	cfg.Headers["X-Demo"] = "test"
+	cfg := cas.CreateConfig()
+	cfg.Url = "https://cas.yourcas.com"
 
 	ctx := context.Background()
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
 
-	handler, err := plugindemo.New(ctx, next, cfg, "demo-plugin")
+	handler, err := cas.New(ctx, next, cfg, "cas-plugin")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,10 +29,7 @@ func TestDemo(t *testing.T) {
 
 	handler.ServeHTTP(recorder, req)
 
-	assertHeader(t, req, "X-Host", "localhost")
-	assertHeader(t, req, "X-URL", "http://localhost")
-	assertHeader(t, req, "X-Method", "GET")
-	assertHeader(t, req, "X-Demo", "test")
+	assertHeader(t, req, "cas-plugin", "success")
 }
 
 func assertHeader(t *testing.T, req *http.Request, key, expected string) {

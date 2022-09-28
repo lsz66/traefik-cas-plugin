@@ -1,12 +1,7 @@
-displayName: Demo Plugin
+displayName: CAS Plugin
 type: middleware
 iconPath: .assets/icon.png
 
-import: github.com/traefik/plugindemo
+import: github.com/lsz66/traefik-cas-plugin
 
-summary: '[Demo] Add Request Header'
-
-testData:
-  Headers:
-    X-Demo: test
-    X-URL: '{{URL}}'
+summary: '[Demo] CAS Auth Plugin'
