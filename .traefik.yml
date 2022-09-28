@@ -5,3 +5,6 @@ iconPath: .assets/icon.png
 import: github.com/lsz66/traefik-cas-plugin
 
 summary: '[Demo] CAS Auth Plugin'
+
+testData:
+  Url: https://cas.yourdomain.com/cas
