@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // Config the plugin configuration.
@@ -40,6 +41,11 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (r *CAS) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	req.Header.Add("cas-plugin", "success")
-	r.next.ServeHTTP(rw, req)
+	for _, cookie := range req.Cookies() {
+		if strings.EqualFold(cookie.Name, "SESSION") {
+			r.next.ServeHTTP(rw, req)
+			break
+		}
+	}
+	http.Redirect(rw, req, r.url, 301)
 }
