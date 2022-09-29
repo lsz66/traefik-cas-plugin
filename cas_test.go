@@ -1,4 +1,4 @@
-package cas_test
+package traefik_cas_plugin_test
 
 import (
 	"context"
@@ -9,13 +9,13 @@ import (
 )
 
 func TestDemo(t *testing.T) {
-	cfg := cas.CreateConfig()
+	cfg := traefik_cas_plugin.CreateConfig()
 	cfg.Url = "https://cas.yourcas.com"
 
 	ctx := context.Background()
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
 
-	handler, err := cas.New(ctx, next, cfg, "cas-plugin")
+	handler, err := traefik_cas_plugin.New(ctx, next, cfg, "cas-plugin")
 	if err != nil {
 		t.Fatal(err)
 	}

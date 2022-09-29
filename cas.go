@@ -1,5 +1,5 @@
-// Package cas a cas plugin.
-package cas
+// Package traefik_cas_plugin a cas plugin.
+package traefik_cas_plugin
 
 import (
 	"context"
